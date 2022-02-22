@@ -14,6 +14,8 @@ The [formGroup] does not have to be applied to a form element. It can be applied
 
 5. In the Car View Row, add an Edit button to the actions column. When the button is clicked, that row changes to an edit row. Only ONE row is editable at a time. Design your data structures accordingly. Do not support multiple edit rows in your data structure.
 
-6. Ensure all HTML DOM rules are followed.
+6. The Car View Row component is NOT a child component of the Car Edit Row. And the Car Edit Row component is NOT a child component of the Car View Row.
 
-7. Ensure it works.
+7. Ensure all HTML DOM rules are followed.
+
+8. Ensure it works.
