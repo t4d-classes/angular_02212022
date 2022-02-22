@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Color } from '../../models/colors';
+import { Color, NewColor } from '../../models/colors';
 
 @Component({
   selector: 'app-color-home',
@@ -20,6 +20,24 @@ export class ColorHomeComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  doAddColor(color: NewColor) {
+
+    // this.colors.push(color); // bad
+
+    // good
+    this.colors = [
+      // ... is the array spread and copies the
+      // original array items into the new array
+      ...this.colors,
+      {
+        // ... object spread operator and copies the
+        // properties of the color object into the new object
+        ...color,
+        id: Math.max(...this.colors.map(c => c.id), 0) + 1,
+      },
+    ];
   }
 
 }

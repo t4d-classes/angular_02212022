@@ -6,3 +6,5 @@ export type Color = {
   hexcode: string;
 };
 
+export type NewColor = Omit<Color, 'id'>;
+
