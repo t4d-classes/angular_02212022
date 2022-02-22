@@ -2,9 +2,13 @@
 
 
 <ul>
-  <li *ngFor="let color of colors">
-    {{color.name}} {{color.hexcode}}
-  </li>
+  <li *ngIf="colors.length === 0">There are no colors.</li>
+  <ng-container *ngFor="let color of colors">
+    <li class="app-color-name-list-item" [color]="color"></li>
+    <li>
+      Hexcode: {{color.hexcode}}
+    </li>
+  </ng-container>
 </ul>
 
 <app-color-form
