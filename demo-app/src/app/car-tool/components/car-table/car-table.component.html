@@ -7,16 +7,18 @@
       <th>Year</th>
       <th>Color</th>
       <th>Price</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let car of cars">
-      <td>{{car.id}}</td>
-      <td>{{car.make}}</td>
-      <td>{{car.model}}</td>
-      <td>{{car.year}}</td>
-      <td>{{car.color}}</td>
-      <td>{{car.price}}</td>
+    <tr *ngIf="cars.length === 0">
+      <td colspan="7">No cars.</td>
     </tr>
+    <ng-container *ngFor="let car of cars">
+      <tr class="app-car-edit-row" *ngIf="car?.id === editCarId" [car]="car"
+        (saveCar)="saveCar.emit($event)" (cancelCar)="cancelCar.emit()"></tr>
+      <tr class="app-car-view-row" *ngIf="car?.id !== editCarId" [car]="car"
+        (editCar)="editCar.emit($event)" (deleteCar)="deleteCar.emit($event)"></tr>
+    </ng-container>
   </tbody>
 </table>
