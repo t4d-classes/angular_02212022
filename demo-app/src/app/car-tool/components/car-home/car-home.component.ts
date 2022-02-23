@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Car, NewCar } from '../../models/cars';
-import { CarsService } from '../../services/cars.service';
+import { CarToolStoreService } from '../../services/car-tool-store.service';
 
 @Component({
   selector: 'app-car-home',
@@ -10,45 +10,38 @@ import { CarsService } from '../../services/cars.service';
 })
 export class CarHomeComponent implements OnInit {
 
-  // all inputs without exception should be treated as immutable
-  @Input() // parameter, that should never, ever, be changed
-  headerText = "Car Tool";
+  get cars() {
+    return this.carToolStoreSvc.cars
+  }
 
-  // application state - data that changes over time (model data)
+  get editCarId() {
+    return this.carToolStoreSvc.editCarId
+  }  
 
-  // application state: persisted data
-  cars: Car[] = [];
-
-  // application state: temporal data
-  editCarId = -1;
-
-  constructor(private carsSvc: CarsService) { }
+  constructor(private carToolStoreSvc: CarToolStoreService) { }
 
   ngOnInit(): void {
-    this.cars = this.carsSvc.all();
+    this.carToolStoreSvc.refreshCars();
   }
 
   doEditCar(carId: number) {
-    this.editCarId = carId;
+    this.carToolStoreSvc.editCar(carId);
   }
 
   doCancelCar() {
-    this.editCarId = -1;
+    this.carToolStoreSvc.cancelCar();
   }
 
   doAddCar(car: NewCar) {
-    this.cars = this.carsSvc.append(car).all();
-    this.editCarId = -1;
+    this.carToolStoreSvc.addCar(car);
   }
 
   doSaveCar(car: Car) {
-    this.cars = this.carsSvc.replace(car).all();
-    this.editCarId = -1;
+    this.carToolStoreSvc.saveCar(car);
   }
 
   doDeleteCar(carId: number) {
-    this.cars = this.carsSvc.remove(carId).all();
-    this.editCarId = -1;
+    this.carToolStoreSvc.deleteCar(carId);
   }
 
 
