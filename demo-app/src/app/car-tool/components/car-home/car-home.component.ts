@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { Car, NewCar } from '../../models/cars';
+import { CarsService } from '../../services/cars.service';
 
 @Component({
   selector: 'app-car-home',
@@ -16,17 +17,15 @@ export class CarHomeComponent implements OnInit {
   // application state - data that changes over time (model data)
 
   // application state: persisted data
-  cars: Car[] = [
-    { id: 1, make: 'Ford', model: 'Fusion Hybrid', year: 2019, color: 'red', price: 45000 },
-    { id: 2, make: 'Tesla', model: 'S', year: 2021, color: 'blue', price: 120000 },
-  ];
+  cars: Car[] = [];
 
   // application state: temporal data
   editCarId = -1;
 
-  constructor() { }
+  constructor(private carsSvc: CarsService) { }
 
   ngOnInit(): void {
+    this.cars = this.carsSvc.all();
   }
 
   doEditCar(carId: number) {
@@ -38,26 +37,17 @@ export class CarHomeComponent implements OnInit {
   }
 
   doAddCar(car: NewCar) {
-    this.cars = [
-      ...this.cars,
-      {
-        ...car,
-        id: Math.max(...this.cars.map(c => c.id), 0) + 1,
-      },
-    ];
+    this.cars = this.carsSvc.append(car).all();
     this.editCarId = -1;
   }
 
   doSaveCar(car: Car) {
-    const newCars = [...this.cars];
-    const carIndex = this.cars.findIndex(c => c.id === car.id);
-    newCars[carIndex] = car;
-    this.cars = newCars;
+    this.cars = this.carsSvc.replace(car).all();
     this.editCarId = -1;
   }
 
   doDeleteCar(carId: number) {
-    this.cars = this.cars.filter(c => c.id !== carId);
+    this.cars = this.carsSvc.remove(carId).all();
     this.editCarId = -1;
   }
 
