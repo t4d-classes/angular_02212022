@@ -8,7 +8,10 @@ describe('ColorHomeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ColorHomeComponent ]
+      declarations: [ ColorHomeComponent ],
+      // providers: [
+      //   { provide: CarsService, useValue: mockCarsService },
+      // ]
     })
     .compileComponents();
   });

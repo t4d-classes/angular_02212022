@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 
 import { Car, NewCar } from '../models/cars';
-import { CarsService } from './cars.service';
+import { ICarsService, CarsServiceToken } from '../models/carsService';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
+  // useFactory: (carsSvc: CarsService) => new CarToolStoreService(carsSvc),
+  // deps: [CarsService],
 })
 export class CarToolStoreService {
 
@@ -14,7 +16,7 @@ export class CarToolStoreService {
   // application state: temporal data
   private _editCarId = -1;
 
-  constructor(private carsSvc: CarsService) { }
+  constructor(@Inject(CarsServiceToken) private carsSvc: ICarsService) { }
 
   public get cars() {
     return this._cars;

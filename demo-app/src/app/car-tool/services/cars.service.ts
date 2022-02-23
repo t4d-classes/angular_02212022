@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 
 import { Car, NewCar } from '../models/cars';
-
+import { ICarsService } from '../models/carsService';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class CarsService {
+export class CarsService implements ICarsService {
 
   private _cars: Car[] = [
     { id: 1, make: 'Ford', model: 'Fusion Hybrid', year: 2019, color: 'red', price: 45000 },
