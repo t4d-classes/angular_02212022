@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Color, NewColor } from '../../models/colors';
+import { ColorsService } from '../../services/colors.service';
 
 @Component({
   selector: 'app-color-home',
@@ -11,33 +12,16 @@ export class ColorHomeComponent implements OnInit {
 
   headerText = "Color Tool";
 
-  colors: Color[] = [
-    { id: 1, name: 'red', hexcode: 'ff0000' },
-    { id: 2, name: 'green', hexcode: '00ff00' },
-    { id: 3, name: 'blue', hexcode: '0000ff' },
-  ];
+  colors: Color[] = [];
 
-  constructor() { }
+  constructor(private colorsSvc: ColorsService) { }
 
   ngOnInit(): void {
+    this.colors = this.colorsSvc.all();
   }
 
   doAddColor(color: NewColor) {
-
-    // this.colors.push(color); // bad
-
-    // good
-    this.colors = [
-      // ... is the array spread and copies the
-      // original array items into the new array
-      ...this.colors,
-      {
-        // ... object spread operator and copies the
-        // properties of the color object into the new object
-        ...color,
-        id: Math.max(...this.colors.map(c => c.id), 0) + 1,
-      },
-    ];
+    this.colors = this.colorsSvc.append(color).all();
   }
 
 }
