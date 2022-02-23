@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 
+import { ConsoleLoggerService } from '../../../shared/services/console-logger.service';
 import { Car, NewCar } from '../../models/cars';
 import { CarToolStoreService } from '../../services/car-tool-store.service';
 
 @Component({
   selector: 'app-car-home',
   templateUrl: './car-home.component.html',
-  styleUrls: ['./car-home.component.css']
+  styleUrls: ['./car-home.component.css'],
+  providers: [
+    { provide: ConsoleLoggerService, useFactory: () => new ConsoleLoggerService('Car Tool >') }
+  ],
 })
 export class CarHomeComponent implements OnInit {
 
@@ -18,9 +22,13 @@ export class CarHomeComponent implements OnInit {
     return this.carToolStoreSvc.editCarId
   }  
 
-  constructor(private carToolStoreSvc: CarToolStoreService) { }
+  constructor(
+    private carToolStoreSvc: CarToolStoreService,
+    private logSvc: ConsoleLoggerService,
+  ) { }
 
   ngOnInit(): void {
+    this.logSvc.log("car home");
     this.carToolStoreSvc.refreshCars();
   }
 

@@ -10,6 +10,9 @@ import { CarsServiceToken } from './car-tool/models/carsService';
 import { CarsService } from './car-tool/services/cars.service';
 import { cars2 } from './car-tool/services/cars2.service';
 
+import { ConsoleLoggerService } from './shared/services/console-logger.service';
+
+
 import { AppComponent } from './app.component';
 
 
@@ -43,7 +46,11 @@ const someFlag = false;
       provide: CarsServiceToken,
       // useValue: cars2,
       useClass: CarsService,
-    }
+    },
+    {
+      provide: ConsoleLoggerService,
+      useFactory: () => new ConsoleLoggerService(),
+    },
   ],
   bootstrap: [AppComponent]
 })
