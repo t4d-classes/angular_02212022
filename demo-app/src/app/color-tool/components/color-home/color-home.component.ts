@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { switchMap } from 'rxjs';
 
 import { ConsoleLoggerService } from '../../../shared/services/console-logger.service';
 import { Color, NewColor } from '../../models/colors';
@@ -34,15 +35,15 @@ export class ColorHomeComponent implements OnInit {
 
   doAddColor(color: NewColor) {
     // calling the rest api to append a color
-    this.colorsSvc.append(color).subscribe({
-      next: () => {
-        // calling the rest api to refresh the colors
-        this.colorsSvc.all().subscribe({
-          next: colors => this.colors = colors,
-          error: err => this.errorMessage = err,
-        });
-      },
-    })
+    this.colorsSvc
+      .append(color)
+      .pipe(
+        switchMap(() => this.colorsSvc.all())
+      )
+      .subscribe({
+        next: colors => this.colors = colors,
+        error: err => this.errorMessage = err,
+      });
   }
 
 }

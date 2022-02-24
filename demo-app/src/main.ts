@@ -13,7 +13,7 @@ platformBrowserDynamic().bootstrapModule(AppModule)
 
 // RxJS Demo
 
-// import { Observable } from "rxjs";
+// import { Observable, map } from "rxjs";
 
 // push
 // const p = new Promise(resolve => {
@@ -38,7 +38,7 @@ platformBrowserDynamic().bootstrapModule(AppModule)
 // let subscriberCount = 0;
 
 // pull
-// const o = new Observable(subscriber => {
+// const o = new Observable<number>(subscriber => {
 
 //   // subscriberCount++;
 
@@ -63,7 +63,7 @@ platformBrowserDynamic().bootstrapModule(AppModule)
 // });
 
 // console.log('called subscribe');
-// const subscription = o.subscribe({
+// const subscription = o.pipe(map(num => num * 2)).subscribe({
 //   next: result => {
 //     console.log(result);
 //   },
