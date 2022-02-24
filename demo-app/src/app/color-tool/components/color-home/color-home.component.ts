@@ -14,6 +14,7 @@ export class ColorHomeComponent implements OnInit {
   headerText = "Color Tool";
 
   colors: Color[] = [];
+  errorMessage = ""
 
   constructor(
     private colorsSvc: ColorsService,
@@ -27,11 +28,21 @@ export class ColorHomeComponent implements OnInit {
 
     this.colorsSvc.all().subscribe({
       next: colors => this.colors = colors,
+      error: err => this.errorMessage = err,
     });
   }
 
   doAddColor(color: NewColor) {
-    //this.colors = this.colorsSvc.append(color).all();
+    // calling the rest api to append a color
+    this.colorsSvc.append(color).subscribe({
+      next: () => {
+        // calling the rest api to refresh the colors
+        this.colorsSvc.all().subscribe({
+          next: colors => this.colors = colors,
+          error: err => this.errorMessage = err,
+        });
+      },
+    })
   }
 
 }

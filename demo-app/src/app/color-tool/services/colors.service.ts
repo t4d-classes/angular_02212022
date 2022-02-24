@@ -31,14 +31,6 @@ export class ColorsService {
   }
 
   public append(color: NewColor) {
-    this._colors = [
-      ...this._colors,
-      {
-        ...color,
-        id: Math.max(...this._colors.map(c => c.id), 0) + 1,
-      },
-    ];
-
-    return this;
+    return this.http.post<Color>('http://localhost:3060/colors', color);
   }
 }
