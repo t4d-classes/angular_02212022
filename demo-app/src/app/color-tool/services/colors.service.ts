@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 import { Color, NewColor } from '../models/colors';
 
@@ -13,10 +14,20 @@ export class ColorsService {
     { id: 3, name: 'blue', hexcode: '0000ff' },
   ];
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+
+  // public all() {
+  //   return [ ...this._colors ];
+  // }
+
+  // public refresh() {
+  //   // get the data from the rest api
+  //   // set the date on _colors
+
+  // }
 
   public all() {
-    return [ ...this._colors ];
+    return this.http.get<Color[]>('http://localhost:3060/colors');
   }
 
   public append(color: NewColor) {

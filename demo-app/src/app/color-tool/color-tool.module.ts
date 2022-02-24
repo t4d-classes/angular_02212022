@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { SharedModule } from '../shared/shared.module';
 
@@ -19,6 +20,7 @@ import { ColorNameListItemComponent } from './components/color-name-list-item/co
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    HttpClientModule,
     SharedModule
   ],
   exports: [

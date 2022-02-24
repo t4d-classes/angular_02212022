@@ -22,11 +22,16 @@ export class ColorHomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.logSvc.log("color home");
-    this.colors = this.colorsSvc.all();
+
+    // this.colors = this.colorsSvc.all();
+
+    this.colorsSvc.all().subscribe({
+      next: colors => this.colors = colors,
+    });
   }
 
   doAddColor(color: NewColor) {
-    this.colors = this.colorsSvc.append(color).all();
+    //this.colors = this.colorsSvc.append(color).all();
   }
 
 }
