@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { NewColor } from '../../models/colors';
 
@@ -18,20 +18,59 @@ export class ColorFormComponent implements OnInit {
 
   colorForm!: FormGroup;
 
+  get nameError() {
 
-  // private fb: FormBuilder;
+    // console.log(this.colorForm)
 
-  // constructor(fb: FormBuilder) {
-  //   this.fb = fb;
-  // }
+    return this.colorForm.get('name')!.errors;
+
+    // // guard
+    // if (this.colorForm.get('name')!.errors) {
+    //   // safely use the thing checked for by the guard
+    //   return this.colorForm.get('name');
+    // } else {
+    //   return false;
+    // }
+  }
+
+  get hexcodeErrorRequired() {
+
+    console.log(this.colorForm.get('hexcode')!.errors);
+
+    // Pure JS
+    // return this.colorForm.get('hexcode').errors?.required;
+
+    // More Involved with TypeScript
+    const errors = this.colorForm.get('hexcode')?.errors;
+    return errors && errors['required'];
+  }
+
+  get hexcodeErrorMinlength() {
+
+    console.log(this.colorForm.get('hexcode')!.errors);
+
+    // Pure JS
+    // return this.colorForm.get('hexcode').errors?.minlength;
+
+    // More Involved with TypeScript
+    const errors = this.colorForm.get('hexcode')?.errors;
+    return errors && errors['minlength'];
+  }
+
+  get showValidationSummary() {
+    return this.nameError
+      || this.hexcodeErrorRequired
+      || this.hexcodeErrorMinlength;
+  }
+
 
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
 
     this.colorForm = this.fb.group({
-      name: '',
-      hexcode: '',
+      name: ['', { validators: [Validators.required] } ],
+      hexcode: ['', { validators: [Validators.required, Validators.minLength(6) ] } ],
     });
 
   }

@@ -1,13 +1,24 @@
+<div *ngIf="showValidationSummary">
+  <h2>Validation Summary</h2>
+  <ul>
+    <li *ngIf="nameError">Name is required.</li>
+    <li *ngIf="hexcodeErrorRequired"></li>
+    <li *ngIf="hexcodeErrorMinlength">Hexcode is required.</li>
+  </ul>
+</div>
+
 <form [formGroup]="colorForm">
 
   <label>
     Name:
     <input type="text" formControlName="name" />
+    <span class="error-message">Name is required.</span>
   </label>
 
   <label>
     Hexcode:
     <input type="text" formControlName="hexcode" />
+    <span class="error-message">Hexcode is required.</span>
   </label>
 
   <button (click)="doSubmitColor()">{{buttonText}}</button>

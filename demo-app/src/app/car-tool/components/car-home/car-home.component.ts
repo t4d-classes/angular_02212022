@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 import { ConsoleLoggerService } from '../../../shared/services/console-logger.service';
 import { Car, NewCar } from '../../models/cars';
@@ -11,15 +11,16 @@ import { CarToolStoreService } from '../../services/car-tool-store.service';
   providers: [
     { provide: ConsoleLoggerService, useFactory: () => new ConsoleLoggerService('Car Tool >') }
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CarHomeComponent implements OnInit {
 
-  get cars() {
-    return this.carToolStoreSvc.cars
+  get cars$() {
+    return this.carToolStoreSvc.cars$ // just the plain value
   }
 
-  get editCarId() {
-    return this.carToolStoreSvc.editCarId
+  get editCarId$() {
+    return this.carToolStoreSvc.editCarId$
   }  
 
   constructor(
