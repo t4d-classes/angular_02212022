@@ -1,19 +1,16 @@
 import { Injectable, Inject } from '@angular/core';
+import { switchMap } from 'rxjs';
 
 import { Car, NewCar } from '../models/cars';
 import { ICarsService, CarsServiceToken } from '../models/carsService';
 
 @Injectable({
   providedIn: 'root',
-  // useFactory: (carsSvc: CarsService) => new CarToolStoreService(carsSvc),
-  // deps: [CarsService],
 })
 export class CarToolStoreService {
 
-  // application state: persisted data
   private _cars: Car[] = [];
 
-  // application state: temporal data
   private _editCarId = -1;
 
   constructor(@Inject(CarsServiceToken) private carsSvc: ICarsService) { }
@@ -27,7 +24,9 @@ export class CarToolStoreService {
   }
 
   public refreshCars() {
-    this._cars = this.carsSvc.all();
+    this.carsSvc.all().subscribe({
+      next: cars => this._cars = cars,
+    });
   }
 
   public editCar(carId: number) {
@@ -39,17 +38,32 @@ export class CarToolStoreService {
   }
 
   public addCar(car: NewCar) {
-    this._cars = this.carsSvc.append(car).all();
+    this.carsSvc
+      .append(car)
+      .pipe(switchMap(() => this.carsSvc.all()))
+      .subscribe({
+        next: cars => this._cars = cars,
+      });
     this._editCarId = - 1;
   }
 
   public saveCar(car: Car) {
-    this._cars = this.carsSvc.replace(car).all();
+    this.carsSvc
+      .replace(car)
+      .pipe(switchMap(() => this.carsSvc.all()))
+      .subscribe({
+        next: cars => this._cars = cars,
+      });
     this._editCarId = - 1;
   }
 
   public deleteCar(carId: number) {
-    this._cars = this.carsSvc.remove(carId).all();
+    this.carsSvc
+      .remove(carId)
+      .pipe(switchMap(() => this.carsSvc.all()))
+      .subscribe({
+        next: cars => this._cars = cars,
+      });
     this._editCarId = - 1;
   }
 }

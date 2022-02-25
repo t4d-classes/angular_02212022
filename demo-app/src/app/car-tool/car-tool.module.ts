@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { SharedModule } from '../shared/shared.module';
-import { ConsoleLoggerService } from '../shared/services/console-logger.service';
 
 import { CarHomeComponent } from './components/car-home/car-home.component';
 import { CarFormComponent } from './components/car-form/car-form.component';
@@ -24,6 +24,7 @@ import { CarEditRowComponent } from './components/car-edit-row/car-edit-row.comp
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    HttpClientModule,
     SharedModule,
   ],
   providers: [

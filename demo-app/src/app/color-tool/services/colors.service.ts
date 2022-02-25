@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { environment } from '../../../environments/environment';
+
 import { Color, NewColor } from '../models/colors';
 
 @Injectable({
@@ -8,29 +10,17 @@ import { Color, NewColor } from '../models/colors';
 })
 export class ColorsService {
 
-  private _colors: Color[] = [
-    { id: 1, name: 'red', hexcode: 'ff0000' },
-    { id: 2, name: 'green', hexcode: '00ff00' },
-    { id: 3, name: 'blue', hexcode: '0000ff' },
-  ];
-
   constructor(private http: HttpClient) { }
 
-  // public all() {
-  //   return [ ...this._colors ];
-  // }
-
-  // public refresh() {
-  //   // get the data from the rest api
-  //   // set the date on _colors
-
-  // }
-
   public all() {
-    return this.http.get<Color[]>('http://localhost:3060/colors');
+    return this.http.get<Color[]>(this.collectionUrl());
   }
 
   public append(color: NewColor) {
-    return this.http.post<Color>('http://localhost:3060/colors', color);
+    return this.http.post<Color>(this.collectionUrl(), color);
+  }
+
+  private collectionUrl() {
+    return environment.apiUrl + "/colors";
   }
 }

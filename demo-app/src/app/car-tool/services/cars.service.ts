@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+import { environment } from '../../../environments/environment';
 
 import { Car, NewCar } from '../models/cars';
 import { ICarsService } from '../models/carsService';
@@ -8,38 +11,29 @@ import { ICarsService } from '../models/carsService';
 })
 export class CarsService implements ICarsService {
 
-  private _cars: Car[] = [
-    { id: 1, make: 'Ford', model: 'Fusion Hybrid', year: 2019, color: 'red', price: 45000 },
-    { id: 2, make: 'Tesla', model: 'S', year: 2021, color: 'blue', price: 120000 },
-  ];
-
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   public all() {
-    return [ ...this._cars ];
+    return this.http.get<Car[]>(this.collectionUrl());
   }
 
   public append(car: NewCar) {
-    this._cars = [
-      ...this._cars,
-      {
-        ...car,
-        id: Math.max(...this._cars.map(c => c.id), 0) + 1,
-      },
-    ];
-    return this;
+    return this.http.post<Car>(this.collectionUrl(), car);
   }
 
   public replace(car: Car) {
-    const newCars = [...this._cars];
-    const carIndex = this._cars.findIndex(c => c.id === car.id);
-    newCars[carIndex] = car;
-    this._cars = newCars;
-    return this;
+    return this.http.put<void>(this.memberUrl(car.id), car);
   }
 
   public remove(carId: number) {
-    this._cars = this._cars.filter(c => c.id !== carId);
-    return this;
+    return this.http.delete<void>(this.memberUrl(carId));
+  }
+
+  private collectionUrl() {
+    return environment.apiUrl + "/cars";
+  }
+
+  private memberUrl(carId: number) {
+    return `${this.collectionUrl()}/${encodeURIComponent(carId)}`;
   }
 }
