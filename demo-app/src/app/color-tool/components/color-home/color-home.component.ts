@@ -19,11 +19,11 @@ export class ColorHomeComponent implements OnInit {
 
   constructor(
     private colorsSvc: ColorsService,
-    private logSvc: ConsoleLoggerService,
+    // private logSvc: ConsoleLoggerService,
   ) { }
 
   ngOnInit(): void {
-    this.logSvc.log("color home");
+    // this.logSvc.log("color home");
 
     // this.colors = this.colorsSvc.all();
 

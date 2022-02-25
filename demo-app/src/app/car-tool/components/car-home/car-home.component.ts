@@ -25,11 +25,11 @@ export class CarHomeComponent implements OnInit {
 
   constructor(
     private carToolStoreSvc: CarToolStoreService,
-    private logSvc: ConsoleLoggerService,
+    // private logSvc: ConsoleLoggerService,
   ) { }
 
   ngOnInit(): void {
-    this.logSvc.log("car home");
+    // this.logSvc.log("car home");
     this.carToolStoreSvc.refreshCars();
   }
 

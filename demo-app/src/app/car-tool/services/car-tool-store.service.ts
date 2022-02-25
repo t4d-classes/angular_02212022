@@ -4,9 +4,7 @@ import { switchMap, BehaviorSubject } from 'rxjs';
 import { Car, NewCar } from '../models/cars';
 import { ICarsService, CarsServiceToken } from '../models/carsService';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class CarToolStoreService {
 
   private _cars$ = new BehaviorSubject<Car[]>([]);

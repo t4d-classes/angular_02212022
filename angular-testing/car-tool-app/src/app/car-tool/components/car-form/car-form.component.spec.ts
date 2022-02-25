@@ -57,7 +57,7 @@ describe('CarFormComponent', () => {
     // car should be emitted
     expect(spy).toHaveBeenCalledWith(inputCar);
 
-    // car form should be reset
+    // car form should be reset - DO NOT INTEROGATE - DO NOT DO THIS
     const { make, model, year, color, price } = component.carForm.value;
 
     expect(make).toEqual('');

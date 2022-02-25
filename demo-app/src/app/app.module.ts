@@ -1,19 +1,20 @@
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 // ES2015 Module Import - JavaScript feature
 import { BrowserModule } from '@angular/platform-browser';
 
-import { ColorToolModule  } from './color-tool/color-tool.module';
-import { CarToolModule  } from './car-tool/car-tool.module';
+import { AppRoutingModule } from './app-routing.module';
 
-import { CarsServiceToken } from './car-tool/models/carsService';
-import { CarsService } from './car-tool/services/cars.service';
-import { cars2 } from './car-tool/services/cars2.service';
+// import { CarsServiceToken } from './car-tool/models/carsService';
+// import { CarsService } from './car-tool/services/cars.service';
+// import { cars2 } from './car-tool/services/cars2.service';
 
-import { ConsoleLoggerService } from './shared/services/console-logger.service';
+// import { ConsoleLoggerService } from './shared/services/console-logger.service';
 
 
 import { AppComponent } from './app.component';
+import { HomeComponent } from './components/home/home.component';
 
 
 const someFlag = false;
@@ -21,12 +22,13 @@ const someFlag = false;
 // Angular Module
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
-    ColorToolModule,
-    CarToolModule,
+    HttpClientModule,
+    AppRoutingModule,
   ],
   providers: [
     // CarsService, // shorthand for the config below
@@ -42,15 +44,15 @@ const someFlag = false;
     //   provide: CarsService, // contract, injection token
     //   useFactory: () => someFlag ? new CarsService() : cars2, // implementation
     // },
-    {
-      provide: CarsServiceToken,
-      // useValue: cars2,
-      useClass: CarsService,
-    },
-    {
-      provide: ConsoleLoggerService,
-      useFactory: () => new ConsoleLoggerService(),
-    },
+    // {
+    //   provide: CarsServiceToken,
+    //   // useValue: cars2,
+    //   useClass: CarsService,
+    // },
+    // {
+    //   provide: ConsoleLoggerService,
+    //   useFactory: () => new ConsoleLoggerService(),
+    // },
   ],
   bootstrap: [AppComponent]
 })

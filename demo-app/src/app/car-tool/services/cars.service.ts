@@ -6,9 +6,10 @@ import { environment } from '../../../environments/environment';
 import { Car, NewCar } from '../models/cars';
 import { ICarsService } from '../models/carsService';
 
-@Injectable({
-  providedIn: 'root',
-})
+// @Injectable({
+//   providedIn: 'root',
+// })
+@Injectable()
 export class CarsService implements ICarsService {
 
   constructor(private http: HttpClient) { }

@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { SharedModule } from '../shared/shared.module';
+import { ColorToolRoutingModule } from './color-tool-routing.module';
 
 import { ColorHomeComponent } from './components/color-home/color-home.component';
 import { ColorFormComponent } from './components/color-form/color-form.component';
@@ -21,7 +22,8 @@ import { ColorNameListItemComponent } from './components/color-name-list-item/co
     CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    ColorToolRoutingModule,
   ],
   exports: [
     ColorHomeComponent,
